@@ -84,6 +84,30 @@ bool CPU::step()
   else return 0;
 }
 
+bool CPU::step(uint16_t steps)
+{
+  for(int i=0;i<steps;++i) {
+    count_cycles++; // count how many cycles executed
+    
+    if(memory.size() == 0) {
+      cout << "No instructions in memory" << endl;
+      return 1;
+    }
+    _next();
+    // fetch next instruction
+    uint32_t instruction = memory.read(current_pc);
+    // decode, execute & opdate registers/memory
+    bool exit = _decode_n_execute(instruction);
+    if(debug) {
+      registers.print_all();
+    }
+    if(exit) {
+      return 1;
+    }
+  }
+  return 1;
+}
+
 void CPU::debug_on() 
 {
   debug=1;

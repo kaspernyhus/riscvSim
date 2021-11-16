@@ -26,6 +26,7 @@ class CPU {
   public:
     CPU(Memory& mem);
     bool step();
+    bool step(uint16_t steps);
     void debug_on();
     void debug_off();
     int get_cycle_count() {return count_cycles;}
