@@ -4,12 +4,10 @@
  * CPU constructor
  * @param reference to external memory where instructions and live
 **/
-CPU::CPU(Memory& mem): memory(mem)
+CPU::CPU(Memory& mem)
+  : memory(mem), current_pc{0}, next_pc{0}, debug{false}, count_cycles{0}
 {
-  current_pc = 0;
-  next_pc = 0;
-  debug = false;
-  count_cycles = 0;
+  
 }
 
 
