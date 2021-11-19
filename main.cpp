@@ -16,8 +16,9 @@ Kasper Nyhus Kaae
 #include "CPU.h"
 
 
-/* Class object instantiation */
 using namespace std;
+
+/* Class object instantiation */
 Memory memory;
 class CPU CPU(memory);
 
@@ -46,7 +47,7 @@ int main(void)
 
   // CPU.debug_on();
 
-  memory.load_instructions("tests/task3/loop.bin");
+  memory.load_instructions("tests/task3/loop/loop.bin");
   // memory.load_instructions(test_prog);
   // memory.print();
   

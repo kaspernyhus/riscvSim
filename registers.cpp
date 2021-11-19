@@ -61,7 +61,7 @@ void Registers::write(uint8_t reg, uint32_t value)
 **/
 void Registers::print_all()
 {
-  cout << "\n------------------------------\n" << "Register content\n" << "------------------------------\n";
+  cout << "\n------------------------------\n" << "Register contents\n" << "------------------------------\n";
   for(int i=0; i<32; ++i) {
     cout << register_names[i] << "0x" << std::setfill ('0') << std::setw(8) << hex << registers[i] << "\n";
   }

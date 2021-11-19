@@ -29,7 +29,7 @@ x28-31	    t3-6	    temporary registers	                Caller
 
 class Registers {
   private:
-    vector<int> registers;
+    vector<int32_t> registers;
   
   public:
     Registers();

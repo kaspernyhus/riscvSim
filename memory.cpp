@@ -96,5 +96,7 @@ int32_t Memory::read(uint32_t addr, uint32_t bitmask)
   for(int i=0; i<block.size(); ++i) {
     if(block[i].address == addr) return block[i].data&bitmask;
   }
+  cout << "Invalid address access" << endl;
+  exit(0);
   return 0;
 }
