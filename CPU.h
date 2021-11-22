@@ -30,9 +30,7 @@ class CPU {
     void debug_on();
     void debug_off();
     int get_cycle_count() {return count_cycles;}
-    uint32_t get_instruction() {return memory.read(current_pc,0xffffffff);}
-    // uint32_t get_current_pc() {return current_pc;}
-    // uint32_t get_next_pc() {return next_pc;}
+    uint32_t get_instruction() {return memory.read(current_pc);}
     void write_to_mem(uint32_t addr, int32_t value) {memory.write(addr,value);}
     void print_registers() {registers.print_all();}
     void dump();

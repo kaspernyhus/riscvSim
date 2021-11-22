@@ -249,11 +249,11 @@ bool CPU::_decode_n_execute(uint32_t instruction)
       {
       case 0b000:
         if(debug) cout << "lb" << endl;
-        registers.write(rd,signextend(7,memory.read(registers.read(rs1)+imm11_0,0x000000ff)));
+        registers.write(rd,signextend(7,memory.read(registers.read(rs1)+imm11_0,1)));
         break;
       case 0b001:
         if(debug) cout << "lh" << endl;
-        registers.write(rd,signextend(15,memory.read(registers.read(rs1)+imm11_0,0x0000ffff)));
+        registers.write(rd,signextend(15,memory.read(registers.read(rs1)+imm11_0,2)));
         break;
       case 0b010:
         if(debug) cout << "lw" << endl;
@@ -265,11 +265,11 @@ bool CPU::_decode_n_execute(uint32_t instruction)
         break;
       case 0b100:
         if(debug) cout << "lbu" << endl;
-        registers.write(rd,(uint32_t)memory.read(registers.read(rs1)+imm11_0,0x000000ff));
+        registers.write(rd,(uint32_t)memory.read(registers.read(rs1)+imm11_0,1));
         break;
       case 0b101:
         if(debug) cout << "lhu" << endl;
-        registers.write(rd,(uint32_t)memory.read(registers.read(rs1)+imm11_0,0x0000ffff));
+        registers.write(rd,(uint32_t)memory.read(registers.read(rs1)+imm11_0,2));
         break;
       case 0b110:
         if(debug) cout << "lwu" << endl;
@@ -344,11 +344,11 @@ bool CPU::_decode_n_execute(uint32_t instruction)
       switch (funct3) {
       case 0b000:
         if(debug) cout << "sb" << endl;
-        memory.write(registers.read(rs1)+store_offset,registers.read(rs2));
+        memory.write(registers.read(rs1)+store_offset,registers.read(rs2),1);
         break;
       case 0b001:
         if(debug) cout << "sh" << endl;
-        memory.write(registers.read(rs1)+store_offset,registers.read(rs2));
+        memory.write(registers.read(rs1)+store_offset,registers.read(rs2),2);
         break;
       case 0b010:
         if(debug) cout << "sw" << endl;
@@ -356,7 +356,7 @@ bool CPU::_decode_n_execute(uint32_t instruction)
         break;
       case 0b111:
         if(debug) cout << "sd" << endl;
-        memory.write(registers.read(rs1)+store_offset,registers.read(rs2));
+        cout << "not part of RV32I" << endl;
         break;
       default:
         cout << "Funct3 error" << endl;
