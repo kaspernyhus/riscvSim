@@ -43,14 +43,16 @@ vector<uint32_t> test_prog {
 
 
 
-int main(void)
-{
+int main(int argc, char *argv[])
+{ 
+  cout << "argc: " << argc << " argc[0]: " << argv[0] << " argv[1]: " << argv[1] << endl;
+  
   cout << "\n\n";
   cout << "* --------------------------------- *\n" << "             Welcome to:\n" << "           Kasper Nyhus's\n" << "   RISC-V instructionset simulator\n" << "* --------------------------------- *\n";
 
   // CPU.debug_on();
 
-  memory.load_instructions("tests/task3/loop.bin");
+  // memory.load_instructions(argv[1]);
   // memory.load_instructions(test_prog);
   // memory.print();
 
