@@ -99,7 +99,7 @@ void Memory::write(uint32_t addr, int32_t data, int bytes)
   for(int i=0; i<block.size(); ++i) {
     if (block.at(i).address == addr) {
       for(int l=0; l<bytes; ++l) {
-        block.at(i).data = (uint8_t)((data>>(l*8))&0xff);
+        block.at(i+l).data = (uint8_t)((data>>(l*8))&0xff);
       }
       address_found = true;
     }
@@ -133,14 +133,29 @@ int32_t Memory::read(uint32_t addr, int bytes)
 {
   int32_t ret_temp = 0;
   for(int i=0; i<block.size(); ++i) {
-    if(block[i].address == addr) {
-      for(int j=0; j<bytes; ++j) {
-        ret_temp |= (block[i+j].data<<(j*8));
+    if(block[i].address == addr) {        // start address found
+      for(int j=0; j<bytes; ++j) {        // read x bytes from address
+        try {
+          ret_temp |= (block[i+j].data<<(j*8));
+        } catch(std::out_of_range) {
+          ret_temp |= (0x00<<(j*8));
+        }
       }
       return ret_temp;
     }
   }
-  cout << "Invalid address access" << endl;
-  exit(0);
-  return 0;
+  
+  // start address NOT found
+  for(int k=1; k<bytes; ++k) {
+    for(int l=0; l<block.size(); ++l) {
+      if(block[l].address == addr+k) {
+        ret_temp |= (block[l].data<<(k*8));
+      }
+    }
+  }
+  return ret_temp;
+    
+  // cout << "Invalid address access" << endl;
+  // // exit(0);
+  // return 0;
 }

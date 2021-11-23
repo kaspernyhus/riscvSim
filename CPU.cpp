@@ -137,7 +137,7 @@ bool CPU::_decode_n_execute(uint32_t instruction)
   uint8_t rd = (instruction >> 7) & 0x1f;
   uint8_t rs1 = (instruction >> 15) & 0x1f;
   uint8_t rs2 = (instruction >> 20) & 0x1f;
-  int32_t imm11_0 = signextend(11,(instruction >> 20));
+  int32_t imm11_0 = signextend(12,(instruction >> 20));
   int32_t imm31_12 = instruction & 0xfffff000;
   int32_t store_offset = calc_store_offset(instruction);
   int32_t branch_offset = calc_branch_offset(instruction);
@@ -249,14 +249,15 @@ bool CPU::_decode_n_execute(uint32_t instruction)
       {
       case 0b000:
         if(debug) cout << "lb" << endl;
-        registers.write(rd,signextend(7,memory.read(registers.read(rs1)+imm11_0,1)));
+        registers.write(rd,signextend(8,memory.read(registers.read(rs1)+imm11_0,1)));
         break;
       case 0b001:
         if(debug) cout << "lh" << endl;
-        registers.write(rd,signextend(15,memory.read(registers.read(rs1)+imm11_0,2)));
+        registers.write(rd,signextend(16,memory.read(registers.read(rs1)+imm11_0,2)));
         break;
       case 0b010:
         if(debug) cout << "lw" << endl;
+        // cout << "reading from: " << hex << registers.read(rs1)+imm11_0 << endl;
         registers.write(rd,memory.read(registers.read(rs1)+imm11_0));
         break;
       case 0b011:
