@@ -50,13 +50,6 @@ void Memory::load_instructions(const char* filename)
       block.push_back(new_entry);
     }
   }
-  
-  // for(uint32_t i=0;i<temp_instr.size();++i) {
-  //   for(int j=0; j<4; ++j) {
-  //     MemoryEntry new_entry = {i+j, (int8_t)(temp_instr.at(i)>>j)&0xff};
-  //     block.push_back(new_entry);
-  //   }
-  // }
 }
 
 
@@ -90,7 +83,9 @@ void Memory::print_bytes()
 /**
  * Write to an address in memory
  * 
- * @param address to write to, data to save
+ * @param addr start address to write to
+ * @param data data to be stored
+ * @param bytes number of consecutive bytes to be stored from addr
 **/
 void Memory::write(uint32_t addr, int32_t data, int bytes)
 {
@@ -133,7 +128,7 @@ int32_t Memory::read(uint32_t addr, int bytes)
 {
   int32_t ret_temp = 0;
   for(int i=0; i<block.size(); ++i) {
-    if(block[i].address == addr) {        // start address found
+    if(block[i].address == addr) {        // start address found in memory
       for(int j=0; j<bytes; ++j) {        // read x bytes from address
         try {
           ret_temp |= (block[i+j].data<<(j*8));
@@ -146,6 +141,7 @@ int32_t Memory::read(uint32_t addr, int bytes)
   }
   
   // start address NOT found
+  // skip and look to see if next byte address is in memory
   for(int k=1; k<bytes; ++k) {
     for(int l=0; l<block.size(); ++l) {
       if(block[l].address == addr+k) {
@@ -153,7 +149,7 @@ int32_t Memory::read(uint32_t addr, int bytes)
       }
     }
   }
-  return ret_temp;
+  return ret_temp; // returns 0x00 if address not in memory
     
   // cout << "Invalid address access" << endl;
   // // exit(0);
